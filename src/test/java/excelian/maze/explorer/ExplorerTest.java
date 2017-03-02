@@ -3,7 +3,7 @@ package excelian.maze.explorer;
 import excelian.maze.domain.Cell;
 import excelian.maze.domain.Maze;
 import excelian.maze.domain.Point;
-import javaslang.collection.List;
+import javaslang.collection.Array;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -37,8 +37,8 @@ public class ExplorerTest {
     @Test
     public void testSolveSimpleMaze(){
         Explorer explorer = new Explorer(maze);
-        List<Point> solve = explorer.solve();
-        assertThat(solve, equalTo(List.of(new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4))));
+        Array<Point> solve = explorer.solve();
+        assertThat(solve, equalTo(Array.of(new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4))));
     }
 
     @Test

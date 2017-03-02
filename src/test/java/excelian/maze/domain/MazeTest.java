@@ -1,6 +1,6 @@
 package excelian.maze.domain;
 
-import javaslang.collection.List;
+import javaslang.collection.Array;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -108,7 +108,7 @@ public class MazeTest {
                 "S+++F\n" +
                 "XXXXX\n";
 
-        List<Point> points = List.of(new Point(1, 1), new Point(1, 2), new Point(1, 3));
+        Array<Point> points = Array.of(new Point(1, 1), new Point(1, 2), new Point(1, 3));
         assertThat(maze.printSolvedRoute(points), equalTo(pathString));
     }
 

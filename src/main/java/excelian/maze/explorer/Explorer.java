@@ -3,8 +3,8 @@ package excelian.maze.explorer;
 import excelian.maze.domain.Cell;
 import excelian.maze.domain.Maze;
 import excelian.maze.domain.Point;
+import javaslang.collection.Array;
 import javaslang.collection.HashSet;
-import javaslang.collection.List;
 import javaslang.collection.Set;
 import javaslang.control.Try;
 
@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Explorer {
 
     private final Maze maze;
-    private List<Point> route;
+    private Array<Point> route;
     private Direction currentDirection;
     private Set<Point> visitedPoints;
 
@@ -21,19 +21,19 @@ public class Explorer {
         Objects.requireNonNull(maze, "Cannot supply a null maze");
 
         this.maze = maze;
-        route = List.of(maze.getStart());
+        route = Array.of(maze.getStart());
         visitedPoints = HashSet.ofAll(route);
         currentDirection = Direction.NORTH;
     }
 
-    public List<Point> solve(){
+    public Array<Point> solve(){
         return Try.of(this::solveMaze)
                 .getOrElseThrow(cause -> new RuntimeException("Unable to find a solution points visited so far\n"
-                                                                     + maze.printSolvedRoute(visitedPoints.toList()),
+                                                                     + maze.printSolvedRoute(visitedPoints.toArray()),
                                                             cause));
     }
 
-    private List<Point> solveMaze(){
+    private Array<Point> solveMaze(){
         while(!hasFinished()) {
             route = moveUntilChoice();
             if(hasFinished()){
@@ -57,15 +57,15 @@ public class Explorer {
     }
 
     public String getVisitedPoints(){
-        return maze.printSolvedRoute(visitedPoints.toList());
+        return maze.printSolvedRoute(visitedPoints.toArray());
     }
 
     public String getSolvedRoute(){
         return maze.printSolvedRoute(route);
     }
 
-    private List<Point> backTrack(){
-        List<Point> tempRoute = route.dropRight(1);
+    private Array<Point> backTrack(){
+        Array<Point> tempRoute = route.dropRight(1);
         while(!canTurnLeft(tempRoute.last()) && !canTurnRight(tempRoute.last())){
 
             //handle T junction
@@ -106,8 +106,8 @@ public class Explorer {
         return !canTurnLeft(point) && !canTurnRight(point) && canMoveForward(point);
     }
 
-    private List<Point> moveUntilChoice() {
-        List<Point> tempRoute = List.ofAll(route);
+    private Array<Point> moveUntilChoice() {
+        Array<Point> tempRoute = Array.ofAll(route);
         while(canOnlyMoveForward(tempRoute.last())){
             Point move = currentDirection.move(tempRoute.last());
             tempRoute = tempRoute.append(move);

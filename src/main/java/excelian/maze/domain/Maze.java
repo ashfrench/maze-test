@@ -1,7 +1,7 @@
 package excelian.maze.domain;
 
+import javaslang.collection.Array;
 import javaslang.collection.HashMap;
-import javaslang.collection.List;
 import javaslang.control.Try;
 import lombok.Getter;
 
@@ -88,10 +88,10 @@ public class Maze {
 
     @Override
     public String toString() {
-        return printSolvedRoute(List.of());
+        return printSolvedRoute(Array.of());
     }
 
-    public String printSolvedRoute(List<Point> points){
+    public String printSolvedRoute(Array<Point> points){
         StringBuilder sb = new StringBuilder();
         for(int x = 0; x < maze.length; x ++){
             for(int y = 0; y < maze[x].length; y ++){
