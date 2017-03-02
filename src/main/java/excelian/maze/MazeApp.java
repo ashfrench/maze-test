@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 public class MazeApp {
 
     public static void main(String[] args) throws URISyntaxException, IOException {
-        URL resource = MazeApp.class.getClassLoader().getResource("ExampleMaze-NoBackTrack.txt");
+        URL resource = MazeApp.class.getClassLoader().getResource("ExampleMaze-2.txt");
         Path path = Paths.get(resource.toURI());
 
         Maze maze = MazeFileReader.readFile(path);
@@ -23,7 +23,12 @@ public class MazeApp {
 
         Explorer explorer = new Explorer(maze);
         List<Point> solve = explorer.solve();
+        System.out.println(solve);
 
-        System.out.println(maze.printSolvedRoute(solve));
+        System.out.println();
+        System.out.println(explorer.getVisitedPoints());
+        System.out.println();
+
+        System.out.println(explorer.getSolvedRoute());
     }
 }

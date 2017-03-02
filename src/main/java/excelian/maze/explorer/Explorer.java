@@ -3,7 +3,9 @@ package excelian.maze.explorer;
 import excelian.maze.domain.Cell;
 import excelian.maze.domain.Maze;
 import excelian.maze.domain.Point;
+import javaslang.collection.HashSet;
 import javaslang.collection.List;
+import javaslang.collection.Set;
 import javaslang.control.Try;
 
 public class Explorer {
@@ -11,31 +13,59 @@ public class Explorer {
     private final Maze maze;
     private List<Point> route;
     private Direction currentDirection;
-    private List<List<Point>> choices;
+    private Set<Point> visitedPoints;
 
     public Explorer(Maze maze){
         this.maze = maze;
         route = List.of(maze.getStart());
-        choices = List.of(route);
+        visitedPoints = HashSet.ofAll(route);
         currentDirection = Direction.NORTH;
     }
 
     public List<Point> solve(){
         while(!hasFinished()) {
             route = moveUntilChoice();
+            if(hasFinished()){
+                break;
+            }
 
             if (canMoveForward(route.last())) {
-                route = route.append(currentDirection.move(route.last()));
+                Point move = currentDirection.move(route.last());
+                route = route.append(move);
+                visitedPoints = visitedPoints.add(move);
             } else if (canTurnLeft(route.last())){
                 currentDirection = turnLeft();
             } else if (canTurnRight(route.last())){
                 currentDirection = turnRight();
             } else {
-                //todo deal with back tracking
+                route = backTrack();
             }
         }
 
         return route;
+    }
+
+    public String getVisitedPoints(){
+        return maze.printSolvedRoute(visitedPoints.toList());
+    }
+
+    public String getSolvedRoute(){
+        return maze.printSolvedRoute(route);
+    }
+
+    private List<Point> backTrack(){
+        List<Point> tempRoute = route.dropRight(1);
+        while(!canTurnLeft(tempRoute.last()) && !canTurnRight(tempRoute.last())){
+
+            //handle T junction
+            if(canTurnAround(tempRoute.last())){
+                currentDirection = currentDirection.turnLeft().turnLeft();
+                break;
+            }
+            tempRoute = tempRoute.dropRight(1);
+        }
+
+        return tempRoute;
     }
 
     private boolean canMoveForward(Point point){
@@ -50,9 +80,14 @@ public class Explorer {
         return canMove(currentDirection.turnRight(), point);
     }
 
+    private boolean canTurnAround(Point point){
+        return canMove(currentDirection.turnLeft().turnLeft(), point);
+    }
+
     private boolean canMove(Direction direction, Point point){
-        return Try.of(() -> maze.getCell(direction.move(point)))
-                .map(cell -> cell == Cell.FINISH || cell == Cell.SPACE)
+        Point move = direction.move(point);
+        return Try.of(() -> maze.getCell(move))
+                .map(cell -> (cell == Cell.FINISH || cell == Cell.SPACE) && !visitedPoints.contains(move))
                 .getOrElse(false);
     }
 
@@ -65,6 +100,7 @@ public class Explorer {
         while(canOnlyMoveForward(tempRoute.last())){
             Point move = currentDirection.move(tempRoute.last());
             tempRoute = tempRoute.append(move);
+            visitedPoints = visitedPoints.add(move);
 
             if(move == maze.getFinish()){
                 break;
