@@ -8,6 +8,8 @@ import javaslang.collection.List;
 import javaslang.collection.Set;
 import javaslang.control.Try;
 
+import java.util.Objects;
+
 public class Explorer {
 
     private final Maze maze;
@@ -16,6 +18,8 @@ public class Explorer {
     private Set<Point> visitedPoints;
 
     public Explorer(Maze maze){
+        Objects.requireNonNull(maze, "Cannot supply a null maze");
+
         this.maze = maze;
         route = List.of(maze.getStart());
         visitedPoints = HashSet.ofAll(route);
@@ -23,6 +27,13 @@ public class Explorer {
     }
 
     public List<Point> solve(){
+        return Try.of(this::solveMaze)
+                .getOrElseThrow(cause -> new RuntimeException("Unable to find a solution points visited so far\n"
+                                                                     + maze.printSolvedRoute(visitedPoints.toList()),
+                                                            cause));
+    }
+
+    private List<Point> solveMaze(){
         while(!hasFinished()) {
             route = moveUntilChoice();
             if(hasFinished()){
@@ -101,10 +112,6 @@ public class Explorer {
             Point move = currentDirection.move(tempRoute.last());
             tempRoute = tempRoute.append(move);
             visitedPoints = visitedPoints.add(move);
-
-            if(move == maze.getFinish()){
-                break;
-            }
         }
         return tempRoute;
     }

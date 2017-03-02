@@ -1,6 +1,5 @@
 package excelian.maze.io;
 
-import excelian.maze.MazeApp;
 import excelian.maze.domain.Maze;
 import org.junit.Rule;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class MazeFileReaderTest {
 
     @Test
     public void testLoadValidMaze() throws IOException, URISyntaxException {
-        URL resource = MazeApp.class.getClassLoader().getResource("ExampleMaze.txt");
+        URL resource = getClass().getClassLoader().getResource("ExampleMaze.txt");
         Path path = Paths.get(resource.toURI());
 
         Maze maze = MazeFileReader.readFile(path);
