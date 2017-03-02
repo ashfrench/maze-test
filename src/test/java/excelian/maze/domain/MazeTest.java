@@ -163,7 +163,16 @@ public class MazeTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage(equalTo("Maze must be square or rectangular"));
 
-        Cell[][] empty = {{WALL, WALL, WALL}, {START, FINISH}};
-        new Maze(empty);
+        Cell[][] nonRectangle = {{WALL, WALL, WALL}, {START, FINISH}};
+        new Maze(nonRectangle);
+    }
+
+    @Test
+    public void testContainsPath(){
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage(equalTo("Should have no path set when creating the maze"));
+
+        Cell[][] containsPath = {{WALL, WALL, WALL, WALL, WALL},{START, PATH, SPACE, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
+        new Maze(containsPath);
     }
 }

@@ -1,5 +1,7 @@
 package excelian.maze.explorer;
 
+import excelian.maze.domain.Point;
+
 public enum Direction {
 
     NORTH {
@@ -12,6 +14,11 @@ public enum Direction {
         public Direction turnRight() {
             return EAST;
         }
+
+        @Override
+        public Point move(Point point) {
+            return new Point(point.getX() + 1, point.getY());
+        }
     },
     SOUTH {
         @Override
@@ -22,6 +29,11 @@ public enum Direction {
         @Override
         public Direction turnRight() {
             return WEST;
+        }
+
+        @Override
+        public Point move(Point point) {
+            return new Point(point.getX() - 1, point.getY());
         }
     },
     EAST {
@@ -34,6 +46,11 @@ public enum Direction {
         public Direction turnRight() {
             return SOUTH;
         }
+
+        @Override
+        public Point move(Point point) {
+            return new Point(point.getX(), point.getY() + 1);
+        }
     },
     WEST {
         @Override
@@ -45,8 +62,14 @@ public enum Direction {
         public Direction turnRight() {
             return NORTH;
         }
+
+        @Override
+        public Point move(Point point) {
+            return new Point(point.getX(), point.getY() - 1);
+        }
     };
 
     public abstract Direction turnLeft();
     public abstract Direction turnRight();
+    public abstract Point move(Point point);
 }

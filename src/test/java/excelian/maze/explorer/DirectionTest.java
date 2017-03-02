@@ -1,5 +1,6 @@
 package excelian.maze.explorer;
 
+import excelian.maze.domain.Point;
 import org.junit.Test;
 
 import static excelian.maze.explorer.Direction.*;
@@ -54,6 +55,30 @@ public class DirectionTest {
     public void testWestTurnRight(){
         Direction turnRight = WEST.turnRight();
         assertThat(turnRight, equalTo(NORTH));
+    }
+
+    @Test
+    public void testNorthMove(){
+        Point move = NORTH.move(new Point(1, 1));
+        assertThat(move, equalTo(new Point(2, 1)));
+    }
+
+    @Test
+    public void testSouthMove(){
+        Point move = SOUTH.move(new Point(1, 1));
+        assertThat(move, equalTo(new Point(0, 1)));
+    }
+
+    @Test
+    public void testEastMove(){
+        Point move = EAST.move(new Point(1, 1));
+        assertThat(move, equalTo(new Point(1, 2)));
+    }
+
+    @Test
+    public void testWestMove(){
+        Point move = WEST.move(new Point(1, 1));
+        assertThat(move, equalTo(new Point(1, 0)));
     }
 
 }

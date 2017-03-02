@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 public class MazeFileReaderTest {
 
@@ -22,8 +23,8 @@ public class MazeFileReaderTest {
 
     @Test
     public void testConstructor(){
-        new MazeFileReader();
         //test it doesnt throw exception for code coverage
+        assertThat(new MazeFileReader(), notNullValue());
     }
 
     @Test

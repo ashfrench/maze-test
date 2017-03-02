@@ -28,11 +28,9 @@ public class Maze {
     public Cell getCell(Point point){
         Objects.requireNonNull(point, "Cannot get cell for null point");
         Try<Cell> tryCell = Try.of(() -> maze[point.getX()][point.getY()]);
-        tryCell.getOrElseThrow(() -> new RuntimeException("X Point must be in the range 0 -> " + (maze.length - 1) +
+        return tryCell.getOrElseThrow(() -> new RuntimeException("X Point must be in the range 0 -> " + (maze.length - 1) +
                                      " Y point must be in the range 0 -> " + (maze[0].length - 1) + "\n" +
                                      "You supplied " + point));
-
-        return maze[point.getX()][point.getY()];
     }
 
     private void validateMaze(Cell[][] maze) {
@@ -81,6 +79,11 @@ public class Maze {
         cellsCount.get(Cell.FINISH)
                 .filter(i -> i == 1)
                 .getOrElseThrow(() -> new RuntimeException("Maze should only contain one finish cell"));
+
+        //Throws is there are paths, otherwise you get back another empty option
+        cellsCount.get(Cell.PATH)
+                .map(aLong -> {throw new RuntimeException("Should have no path set when creating the maze");});
+
     }
 
     @Override
