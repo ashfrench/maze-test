@@ -5,7 +5,7 @@ import lombok.Value;
 @Value
 public class Point {
 
-    int x;
-    int y;
+    private int x;
+    private int y;
 
 }

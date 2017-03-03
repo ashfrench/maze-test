@@ -10,7 +10,7 @@ public enum Cell {
     FINISH('F'),
     PATH('+');
 
-    char cellChar;
+    private char cellChar;
 
     Cell(char cellChar){
         this.cellChar = cellChar;
