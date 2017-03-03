@@ -35,10 +35,6 @@ public class Explorer {
 
     private Array<Point> solveMaze(){
         while(!hasFinished()) {
-            route = moveUntilChoice();
-            if(hasFinished()){
-                break;
-            }
 
             if (canMoveForward(route.last())) {
                 Point move = currentDirection.move(route.last());
@@ -100,20 +96,6 @@ public class Explorer {
         return Try.of(() -> maze.getCell(move))
                 .map(cell -> (cell == Cell.FINISH || cell == Cell.SPACE) && !visitedPoints.contains(move))
                 .getOrElse(false);
-    }
-
-    private boolean canOnlyMoveForward(Point point) {
-        return !canTurnLeft(point) && !canTurnRight(point) && canMoveForward(point);
-    }
-
-    private Array<Point> moveUntilChoice() {
-        Array<Point> tempRoute = Array.ofAll(route);
-        while(canOnlyMoveForward(tempRoute.last())){
-            Point move = currentDirection.move(tempRoute.last());
-            tempRoute = tempRoute.append(move);
-            visitedPoints = visitedPoints.add(move);
-        }
-        return tempRoute;
     }
 
     private boolean hasFinished(){
