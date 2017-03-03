@@ -17,7 +17,7 @@ public enum Cell {
     }
 
     public static Cell getCell(char c){
-        char upperChar = ("" + c).toUpperCase().charAt(0);
+        char upperChar = Character.toUpperCase(c);
         return Stream.of(values()).filter(cell -> cell.cellChar == upperChar)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("No cell type for '" + c + "'"));
