@@ -154,6 +154,52 @@ public class MazeAppFunctionalTests {
         assertThat(explorer.getSolvedRoute(), equalTo(expectedRoute));
     }
 
+    @Test
+    public void testXJunction() throws Exception {
+        Explorer explorer = getExplorer("ExampleMaze-X-junction.txt");
+        explorer.solve();
+
+        System.out.println(explorer.getVisitedPoints());
+
+        String expectedVisitedPoints =
+                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
+                "X+++++++++++++X++++XXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXXXX+++XX+XXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XS++++++++X XXXX+++++++++++++++XXXXXXXXXXXX\n" +
+                "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXX++++++X X+++++++++++++++++++++++++++XXX\n" +
+                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX XXXX+XXXXXXXXX\n" +
+                "X+XXXX+XXXXXXXX+XXX XXXXXXXXXX XXXX+XXXXXXXXX\n" +
+                "X+X++++XXXXXX X+XXX XXX        XXXX++++XXXXXX\n" +
+                "X+X+XXXXXXXXX X+X   XXX XXXXXX XXXX+XX+XXXXXX\n" +
+                "X+X+XXXXXXXXX X+XXX     XXXXXX XXXX+XX+++XXXX\n" +
+                "X+X+++++++++X X+XXX XXX XXXXXX XXXXXXXXX+XXXX\n" +
+                "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX+XXXX\n" +
+                "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+
+        assertThat(explorer.getVisitedPoints(), equalTo(expectedVisitedPoints));
+
+        String expectedRoute =
+                "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
+                "X+++++++++++++X++++XXXXXXXXXXX XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXXXX+++XX+XXXXXXXXXXX XXXXXXXXXXXXXX\n" +
+                "X+XS++++++++X XXXX+++++++++++++  XXXXXXXXXXXX\n" +
+                "X+XXXXXXXXX+X X XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXX+X X XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXX++++++X X++++++++++++++++           XXX\n" +
+                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX XXXX XXXXXXXXX\n" +
+                "X+XXXX+XXXXXXXX+XXX XXXXXXXXXX XXXX XXXXXXXXX\n" +
+                "X+X++++XXXXXX X+XXX XXX        XXXX    XXXXXX\n" +
+                "X+X+XXXXXXXXX X+X   XXX XXXXXX XXXX XX XXXXXX\n" +
+                "X+X+XXXXXXXXX X+XXX     XXXXXX XXXX XX   XXXX\n" +
+                "X+X+++++++++X X+XXX XXX XXXXXX XXXXXXXXX XXXX\n" +
+                "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX XXXX\n" +
+                "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
+
+        assertThat(explorer.getSolvedRoute(), equalTo(expectedRoute));
+    }
+
     private Explorer getExplorer(String file) throws Exception{
         URL resource = getResource(file);
         Path path = Paths.get(resource.toURI());
