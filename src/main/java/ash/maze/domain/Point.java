@@ -1,4 +1,4 @@
-package excelian.maze.domain;
+package ash.maze.domain;
 
 import lombok.Value;
 

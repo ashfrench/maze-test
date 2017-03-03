@@ -1,8 +1,8 @@
-package excelian.maze.explorer;
+package ash.maze.explorer;
 
-import excelian.maze.domain.Cell;
-import excelian.maze.domain.Maze;
-import excelian.maze.domain.Point;
+import ash.maze.domain.Cell;
+import ash.maze.domain.Point;
+import ash.maze.domain.Maze;
 import javaslang.collection.Array;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;

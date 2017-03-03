@@ -1,8 +1,8 @@
-package excelian.maze;
+package ash.maze;
 
-import excelian.maze.domain.Maze;
-import excelian.maze.explorer.Explorer;
-import excelian.maze.io.MazeFileReader;
+import ash.maze.domain.Maze;
+import ash.maze.explorer.Explorer;
+import ash.maze.io.MazeFileReader;
 import org.junit.Test;
 
 import java.net.URL;

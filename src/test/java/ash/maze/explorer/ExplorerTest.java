@@ -1,14 +1,14 @@
-package excelian.maze.explorer;
+package ash.maze.explorer;
 
-import excelian.maze.domain.Cell;
-import excelian.maze.domain.Maze;
-import excelian.maze.domain.Point;
+import ash.maze.domain.Cell;
+import ash.maze.domain.Maze;
+import ash.maze.domain.Point;
 import javaslang.collection.Array;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static excelian.maze.domain.Cell.*;
+import static ash.maze.domain.Cell.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;

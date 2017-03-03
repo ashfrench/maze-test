@@ -1,7 +1,7 @@
-package excelian.maze.io;
+package ash.maze.io;
 
-import excelian.maze.domain.Cell;
-import excelian.maze.domain.Maze;
+import ash.maze.domain.Cell;
+import ash.maze.domain.Maze;
 
 import java.io.IOException;
 import java.nio.file.Files;

@@ -1,6 +1,6 @@
-package excelian.maze.io;
+package ash.maze.io;
 
-import excelian.maze.domain.Maze;
+import ash.maze.domain.Maze;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;

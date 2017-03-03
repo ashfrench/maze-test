@@ -1,9 +1,9 @@
-package excelian.maze.explorer;
+package ash.maze.explorer;
 
-import excelian.maze.domain.Point;
+import ash.maze.domain.Point;
 import org.junit.Test;
 
-import static excelian.maze.explorer.Direction.*;
+import static ash.maze.explorer.Direction.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

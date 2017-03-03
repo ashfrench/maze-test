@@ -1,6 +1,6 @@
-package excelian.maze.explorer;
+package ash.maze.explorer;
 
-import excelian.maze.domain.Point;
+import ash.maze.domain.Point;
 
 public enum Direction {
 

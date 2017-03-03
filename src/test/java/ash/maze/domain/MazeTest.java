@@ -1,11 +1,10 @@
-package excelian.maze.domain;
+package ash.maze.domain;
 
 import javaslang.collection.Array;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static excelian.maze.domain.Cell.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -14,7 +13,7 @@ public class MazeTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Cell[][] simpleGoodMaze = {{WALL, WALL, WALL, WALL, WALL},{START, SPACE, SPACE, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
+    private Cell[][] simpleGoodMaze = {{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL},{Cell.START, Cell.SPACE, Cell.SPACE, Cell.SPACE, Cell.FINISH},{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL}};
 
     @Test
     public void testMaze(){
@@ -43,25 +42,25 @@ public class MazeTest {
     @Test
     public void testGetPointWall(){
         Maze maze = new Maze(simpleGoodMaze);
-        assertThat(maze.getCell(new Point(0, 0)), equalTo(WALL));
+        assertThat(maze.getCell(new Point(0, 0)), equalTo(Cell.WALL));
     }
 
     @Test
     public void testGetPointSpace(){
         Maze maze = new Maze(simpleGoodMaze);
-        assertThat(maze.getCell(new Point(1, 3)), equalTo(SPACE));
+        assertThat(maze.getCell(new Point(1, 3)), equalTo(Cell.SPACE));
     }
 
     @Test
     public void testGetPointStart(){
         Maze maze = new Maze(simpleGoodMaze);
-        assertThat(maze.getCell(new Point(1, 0)), equalTo(START));
+        assertThat(maze.getCell(new Point(1, 0)), equalTo(Cell.START));
     }
 
     @Test
     public void testGetPointFinish(){
         Maze maze = new Maze(simpleGoodMaze);
-        assertThat(maze.getCell(new Point(1, 4)), equalTo(FINISH));
+        assertThat(maze.getCell(new Point(1, 4)), equalTo(Cell.FINISH));
     }
 
     @Test
@@ -125,7 +124,7 @@ public class MazeTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage(equalTo("Maze should only contain one start cell"));
 
-        Cell[][] twoStartPoints = {{WALL, WALL, WALL, WALL, WALL},{START, START, SPACE, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
+        Cell[][] twoStartPoints = {{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL},{Cell.START, Cell.START, Cell.SPACE, Cell.SPACE, Cell.FINISH},{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL}};
 
         new Maze(twoStartPoints);
     }
@@ -135,7 +134,7 @@ public class MazeTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage(equalTo("Maze should only contain one finish cell"));
 
-        Cell[][] twoFinishPoints = {{WALL, WALL, WALL, WALL, WALL},{START, FINISH, SPACE, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
+        Cell[][] twoFinishPoints = {{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL},{Cell.START, Cell.FINISH, Cell.SPACE, Cell.SPACE, Cell.FINISH},{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL}};
 
         new Maze(twoFinishPoints);
     }
@@ -163,7 +162,7 @@ public class MazeTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage(equalTo("Maze must be square or rectangular"));
 
-        Cell[][] nonRectangle = {{WALL, WALL, WALL}, {START, FINISH}};
+        Cell[][] nonRectangle = {{Cell.WALL, Cell.WALL, Cell.WALL}, {Cell.START, Cell.FINISH}};
         new Maze(nonRectangle);
     }
 
@@ -172,7 +171,7 @@ public class MazeTest {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage(equalTo("Should have no path set when creating the maze"));
 
-        Cell[][] containsPath = {{WALL, WALL, WALL, WALL, WALL},{START, PATH, SPACE, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
+        Cell[][] containsPath = {{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL},{Cell.START, Cell.PATH, Cell.SPACE, Cell.SPACE, Cell.FINISH},{Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL, Cell.WALL}};
         new Maze(containsPath);
     }
 }
