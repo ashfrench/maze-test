@@ -159,8 +159,6 @@ public class MazeAppFunctionalTests {
         Explorer explorer = getExplorer("ExampleMaze-X-junction.txt");
         explorer.solve();
 
-        System.out.println(explorer.getVisitedPoints());
-
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
                 "X+++++++++++++X++++XXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
