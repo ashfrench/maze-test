@@ -3,6 +3,7 @@ package ash.maze.explorer;
 import ash.maze.domain.Cell;
 import ash.maze.domain.Maze;
 import ash.maze.domain.Point;
+import ash.maze.domain.SolvedMaze;
 import javaslang.collection.Array;
 import org.junit.Rule;
 import org.junit.Test;

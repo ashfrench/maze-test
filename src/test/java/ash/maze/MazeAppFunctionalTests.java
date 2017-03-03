@@ -2,7 +2,7 @@ package ash.maze;
 
 import ash.maze.domain.Maze;
 import ash.maze.explorer.Explorer;
-import ash.maze.explorer.SolvedMaze;
+import ash.maze.domain.SolvedMaze;
 import ash.maze.io.MazeFileReader;
 import org.junit.Test;
 

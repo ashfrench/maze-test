@@ -1,4 +1,4 @@
-package ash.maze.explorer;
+package ash.maze.domain;
 
 import ash.maze.domain.Maze;
 import ash.maze.domain.Point;
