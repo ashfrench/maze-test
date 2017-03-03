@@ -37,15 +37,15 @@ public class ExplorerTest {
     @Test
     public void testSolveSimpleMaze(){
         Explorer explorer = new Explorer(maze);
-        Array<Point> solve = explorer.solve();
-        assertThat(solve, equalTo(Array.of(new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4))));
+        SolvedMaze solve = explorer.solve();
+        assertThat(solve.getRoute(), equalTo(Array.of(new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4))));
     }
 
     @Test
     public void testSolveSimpleMazeStringOutput(){
         Explorer explorer = new Explorer(maze);
-        explorer.solve();
-        String solvedRoute = explorer.getSolvedRoute();
+        SolvedMaze solvedMaze = explorer.solve();
+        String solvedRoute = solvedMaze.getSolvedRoute();
         String expected = "XXXXX\n" +
                           "S+++F\n" +
                           "XXXXX\n";
@@ -59,7 +59,7 @@ public class ExplorerTest {
                           {WALL, WALL, SPACE, WALL, WALL},
                           {WALL, WALL, FINISH, WALL, WALL}};
         Explorer explorer = new Explorer(new Maze(cells));
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedVisited =
                 "XXXXX\n" +
@@ -67,7 +67,7 @@ public class ExplorerTest {
                 "XX+XX\n" +
                 "XXFXX\n";
 
-        assertThat(explorer.getVisitedPoints(), equalTo(expectedVisited));
+        assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisited));
 
         String expectedSolved =
                 "XXXXX\n" +
@@ -75,7 +75,7 @@ public class ExplorerTest {
                 "XX+XX\n" +
                 "XXFXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedSolved));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedSolved));
 
     }
 

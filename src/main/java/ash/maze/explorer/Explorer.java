@@ -26,14 +26,14 @@ public class Explorer {
         currentDirection = Direction.NORTH;
     }
 
-    public Array<Point> solve(){
+    public SolvedMaze solve(){
         return Try.of(this::solveMaze)
                 .getOrElseThrow(cause -> new RuntimeException("Unable to find a solution points visited so far\n"
                                                                      + maze.printSolvedRoute(visitedPoints.toArray()),
                                                             cause));
     }
 
-    private Array<Point> solveMaze(){
+    private SolvedMaze solveMaze(){
         while(!hasFinished()) {
 
             if (canMoveForward(route.last())) {
@@ -49,15 +49,7 @@ public class Explorer {
             }
         }
 
-        return route;
-    }
-
-    public String getVisitedPoints(){
-        return maze.printSolvedRoute(visitedPoints.toArray());
-    }
-
-    public String getSolvedRoute(){
-        return maze.printSolvedRoute(route);
+        return new SolvedMaze(maze, route, visitedPoints);
     }
 
     private Array<Point> backTrack(){

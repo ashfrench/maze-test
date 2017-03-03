@@ -2,6 +2,7 @@ package ash.maze;
 
 import ash.maze.domain.Maze;
 import ash.maze.explorer.Explorer;
+import ash.maze.explorer.SolvedMaze;
 import ash.maze.io.MazeFileReader;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class MazeAppFunctionalTests {
     @Test
     public void testExampleMaze() throws Exception{
         Explorer explorer = getExplorer("ExampleMaze.txt");
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedSolvedRoute =
                 "XXXXXXXXXXXXXXX\n" +
@@ -36,13 +37,13 @@ public class MazeAppFunctionalTests {
                 "X+XXXXXXXXX+++X\n" +
                 "XFXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedSolvedRoute));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedSolvedRoute));
     }
 
     @Test
     public void testExampleMaze_NoBackTrack() throws Exception{
         Explorer explorer = getExplorer("ExampleMaze-NoBackTrack.txt");
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedSolvedRoute =
                 "XXXXXXXXXXXXXXX\n" +
@@ -61,13 +62,13 @@ public class MazeAppFunctionalTests {
                         "X+XXXXXXXXX+++X\n" +
                         "XFXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedSolvedRoute));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedSolvedRoute));
     }
 
     @Test
     public void testBackTrack() throws Exception{
         Explorer explorer = getExplorer("ExampleMaze-2.txt");
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -87,7 +88,7 @@ public class MazeAppFunctionalTests {
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
 
-        assertThat(explorer.getVisitedPoints(), equalTo(expectedVisitedPoints));
+        assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisitedPoints));
 
         String expectedRoute =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -106,13 +107,13 @@ public class MazeAppFunctionalTests {
                 "X+XXXXXXXXX++++++++++++++++++XXXXXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedRoute));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedRoute));
     }
 
     @Test
     public void testTJunction() throws Exception{
         Explorer explorer = getExplorer("ExampleMaze-t-junction.txt");
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -132,7 +133,7 @@ public class MazeAppFunctionalTests {
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
 
-        assertThat(explorer.getVisitedPoints(), equalTo(expectedVisitedPoints));
+        assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisitedPoints));
 
         String expectedRoute =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -151,13 +152,13 @@ public class MazeAppFunctionalTests {
                 "X+XXXXXXXXX+++               XXXXXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedRoute));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedRoute));
     }
 
     @Test
     public void testXJunction() throws Exception {
         Explorer explorer = getExplorer("ExampleMaze-X-junction.txt");
-        explorer.solve();
+        SolvedMaze solvedMaze = explorer.solve();
 
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -176,7 +177,7 @@ public class MazeAppFunctionalTests {
                 "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX+XXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getVisitedPoints(), equalTo(expectedVisitedPoints));
+        assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisitedPoints));
 
         String expectedRoute =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
@@ -195,7 +196,7 @@ public class MazeAppFunctionalTests {
                 "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX XXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
-        assertThat(explorer.getSolvedRoute(), equalTo(expectedRoute));
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedRoute));
     }
 
     private Explorer getExplorer(String file) throws Exception{
