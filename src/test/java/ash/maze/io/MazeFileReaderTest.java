@@ -54,6 +54,17 @@ public class MazeFileReaderTest {
     }
 
     @Test
+    public void testLoadInvalidMaze() throws IOException, URISyntaxException {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage(equalTo("No cell type for 'A'"));
+
+        URL resource = getClass().getClassLoader().getResource("Invalid.txt");
+        Path path = Paths.get(resource.toURI());
+
+        MazeFileReader.readFile(path);
+    }
+
+    @Test
     public void testLoadNullPath() throws IOException {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage(equalTo("Path cannot be null"));
