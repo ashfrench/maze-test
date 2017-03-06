@@ -81,6 +81,34 @@ public class ExplorerTest {
     }
 
     @Test
+    public void testReuse(){
+        Cell[][] cells = {{WALL, WALL, WALL, WALL, WALL},
+                {START, SPACE, SPACE, SPACE, WALL},
+                {WALL, WALL, SPACE, WALL, WALL},
+                {WALL, WALL, FINISH, WALL, WALL}};
+        Explorer explorer = new Explorer(new Maze(cells));
+
+        SolvedMaze solvedMaze = explorer.solve();
+        String expectedVisited =
+                "XXXXX\n" +
+                        "S+++X\n" +
+                        "XX+XX\n" +
+                        "XXFXX\n";
+
+        assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisited));
+
+        String expectedSolved =
+                "XXXXX\n" +
+                        "S++ X\n" +
+                        "XX+XX\n" +
+                        "XXFXX\n";
+
+        assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedSolved));
+        assertThat("Is same object", solvedMaze == explorer.solve());
+        assertThat(solvedMaze.hashCode(), equalTo(explorer.solve().hashCode()));
+    }
+
+    @Test
     public void testUnsolvable(){
         thrown.expect(RuntimeException.class);
         String expectedMessage = "Unable to find a solution points visited so far\n" +

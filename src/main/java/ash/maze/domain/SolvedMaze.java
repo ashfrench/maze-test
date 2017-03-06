@@ -2,10 +2,12 @@ package ash.maze.domain;
 
 import javaslang.collection.Array;
 import javaslang.collection.Set;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.Objects;
 
+@EqualsAndHashCode
 public class SolvedMaze {
 
     private final Maze maze;

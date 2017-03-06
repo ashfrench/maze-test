@@ -1,12 +1,13 @@
 package ash.maze.explorer;
 
 import ash.maze.domain.Cell;
-import ash.maze.domain.Point;
 import ash.maze.domain.Maze;
+import ash.maze.domain.Point;
 import ash.maze.domain.SolvedMaze;
 import javaslang.collection.Array;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;
+import javaslang.control.Option;
 import javaslang.control.Try;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class Explorer {
     private Array<Point> route;
     private Direction currentDirection;
     private Set<Point> visitedPoints;
+    private SolvedMaze solvedMaze;
 
     public Explorer(Maze maze){
         Objects.requireNonNull(maze, "Cannot supply a null maze");
@@ -28,7 +30,7 @@ public class Explorer {
     }
 
     public SolvedMaze solve(){
-        return Try.of(this::solveMaze)
+        return Try.of(() -> Option.of(solvedMaze).getOrElse(this::solveMaze))
                 .getOrElseThrow(cause -> new RuntimeException("Unable to find a solution points visited so far\n"
                                                                      + maze.printSolvedRoute(visitedPoints.toArray()),
                                                             cause));
@@ -50,7 +52,8 @@ public class Explorer {
             }
         }
 
-        return new SolvedMaze(maze, route, visitedPoints);
+        solvedMaze = new SolvedMaze(maze, route, visitedPoints);
+        return solvedMaze;
     }
 
     private Array<Point> backTrack(){
