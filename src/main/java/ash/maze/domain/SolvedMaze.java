@@ -1,7 +1,5 @@
 package ash.maze.domain;
 
-import ash.maze.domain.Maze;
-import ash.maze.domain.Point;
 import javaslang.collection.Array;
 import javaslang.collection.Set;
 import lombok.Getter;
