@@ -1,8 +1,8 @@
 package ash.maze;
 
 import ash.maze.domain.Maze;
-import ash.maze.explorer.Explorer;
 import ash.maze.domain.SolvedMaze;
+import ash.maze.explorer.Explorer;
 import ash.maze.io.MazeFileReader;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class MazeAppFunctionalTests {
+public class TestMazeAppFunctional {
 
     @Test
     public void testExampleMaze() throws Exception{
