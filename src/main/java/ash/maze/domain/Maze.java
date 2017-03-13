@@ -1,14 +1,12 @@
 package ash.maze.domain;
 
 import javaslang.collection.Array;
-import javaslang.collection.HashMap;
+import javaslang.collection.Map;
 import javaslang.control.Try;
 import lombok.Getter;
 
 import java.util.Objects;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.*;
 
 public class Maze {
 
@@ -67,10 +65,10 @@ public class Maze {
     }
 
     private void validateMazeCellCounts(Cell[][] maze) {
-
-        HashMap<Cell, Long> cellsCount = Stream.of(maze)
-                .flatMap(Stream::of)
-                .collect(collectingAndThen(groupingBy(c -> c, counting()), HashMap::ofAll));
+        Map<Cell, Integer> cellsCount = Array.of(maze)
+                .flatMap(Array::of)
+                .groupBy(c -> c)
+                .mapValues(Array::length);
 
         cellsCount.get(Cell.START)
                 .filter(i -> i == 1)
