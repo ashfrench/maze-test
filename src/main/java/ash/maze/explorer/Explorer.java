@@ -1,9 +1,6 @@
 package ash.maze.explorer;
 
-import ash.maze.domain.Cell;
-import ash.maze.domain.Maze;
-import ash.maze.domain.Point;
-import ash.maze.domain.SolvedMaze;
+import ash.maze.domain.*;
 import javaslang.collection.Array;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;
@@ -15,8 +12,7 @@ import java.util.Objects;
 public class Explorer {
 
     private final Maze maze;
-    private Array<Point> route;
-    private Direction currentDirection;
+    private Array<Move> route;
     private Set<Point> visitedPoints;
     private SolvedMaze solvedMaze;
 
@@ -24,9 +20,8 @@ public class Explorer {
         Objects.requireNonNull(maze, "Cannot supply a null maze");
 
         this.maze = maze;
-        route = Array.of(maze.getStart());
-        visitedPoints = HashSet.ofAll(route);
-        currentDirection = Direction.NORTH;
+        route = Array.of(new Move(Direction.NORTH, maze.getStart()));
+        visitedPoints = HashSet.of(maze.getStart());
     }
 
     public SolvedMaze solve(){
@@ -37,54 +32,55 @@ public class Explorer {
     }
 
     private SolvedMaze solveMaze(){
+        Direction currentDirection = Direction.NORTH;
         while(!hasFinished()) {
 
-            if (canMoveForward(route.last())) {
-                Point move = currentDirection.move(route.last());
-                route = route.append(move);
-                visitedPoints = visitedPoints.add(move);
-            } else if (canTurnLeft(route.last())){
-                currentDirection = turnLeft();
-            } else if (canTurnRight(route.last())){
-                currentDirection = turnRight();
+            Move last = route.last();
+            if (canMoveForward(last)) {
+                Point point = currentDirection.move(last.getPoint());
+                route = route.append(new Move(currentDirection, point));
+                visitedPoints = visitedPoints.add(point);
+            } else if (canTurnLeft(last)){
+                currentDirection = currentDirection.turnLeft();
+
+                Point point = currentDirection.move(last.getPoint());
+                route = route.append(new Move(currentDirection, point));
+                visitedPoints = visitedPoints.add(point);
+
+            } else if (canTurnRight(last)){
+                currentDirection = currentDirection.turnRight();
+
+                Point point = currentDirection.move(last.getPoint());
+                route = route.append(new Move(currentDirection, point));
+                visitedPoints = visitedPoints.add(point);
             } else {
                 route = backTrack();
             }
         }
 
-        solvedMaze = new SolvedMaze(maze, route, visitedPoints);
+        solvedMaze = new SolvedMaze(maze, route.map(Move::getPoint), visitedPoints);
         return solvedMaze;
     }
 
-    private Array<Point> backTrack(){
-        Array<Point> tempRoute = route.dropRight(1);
+    private Array<Move> backTrack(){
+        Array<Move> tempRoute = route.dropRight(1);
         while(!canTurnLeft(tempRoute.last()) && !canTurnRight(tempRoute.last())){
-
-            //handle T junction
-            if(canTurnAround(tempRoute.last())){
-                currentDirection = currentDirection.turnLeft().turnLeft();
-                break;
-            }
             tempRoute = tempRoute.dropRight(1);
         }
 
         return tempRoute;
     }
 
-    private boolean canMoveForward(Point point){
-        return canMove(currentDirection, point);
+    private boolean canMoveForward(Move lastMove){
+        return canMove(lastMove.getDirection(), lastMove.getPoint());
     }
 
-    private boolean canTurnLeft(Point point){
-        return canMove(currentDirection.turnLeft(),point);
+    private boolean canTurnLeft(Move lastMove){
+        return canMove(lastMove.getDirection().turnLeft(), lastMove.getPoint());
     }
 
-    private boolean canTurnRight(Point point){
-        return canMove(currentDirection.turnRight(), point);
-    }
-
-    private boolean canTurnAround(Point point){
-        return canMove(currentDirection.turnLeft().turnLeft(), point);
+    private boolean canTurnRight(Move lastMove){
+        return canMove(lastMove.getDirection().turnRight(), lastMove.getPoint());
     }
 
     private boolean canMove(Direction direction, Point point){
@@ -95,16 +91,7 @@ public class Explorer {
     }
 
     private boolean hasFinished(){
-        return maze.getCell(route.last()) == Cell.FINISH;
-    }
-
-
-    private Direction turnLeft() {
-        return currentDirection.turnLeft();
-    }
-
-    private Direction turnRight() {
-        return currentDirection.turnRight();
+        return maze.getCell(route.last().getPoint()) == Cell.FINISH;
     }
 
 }
