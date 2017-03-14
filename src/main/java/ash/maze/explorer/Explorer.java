@@ -32,43 +32,35 @@ public class Explorer {
     }
 
     private SolvedMaze solveMaze(){
-        Direction currentDirection = Direction.NORTH;
+
         while(!hasFinished()) {
 
-            Move last = route.last();
-            if (canMoveForward(last)) {
-                Point point = currentDirection.move(last.getPoint());
-                route = route.append(new Move(currentDirection, point));
-                visitedPoints = visitedPoints.add(point);
-            } else if (canTurnLeft(last)){
-                currentDirection = currentDirection.turnLeft();
+            Move lastMove = route.head();
+            Direction currentDirection = lastMove.getDirection();
 
-                Point point = currentDirection.move(last.getPoint());
-                route = route.append(new Move(currentDirection, point));
-                visitedPoints = visitedPoints.add(point);
-
-            } else if (canTurnRight(last)){
-                currentDirection = currentDirection.turnRight();
-
-                Point point = currentDirection.move(last.getPoint());
-                route = route.append(new Move(currentDirection, point));
-                visitedPoints = visitedPoints.add(point);
+            if (canMoveForward(lastMove)) {
+                applyMove(currentDirection, lastMove);
+            } else if (canTurnLeft(lastMove)){
+                applyMove(currentDirection.turnLeft(), lastMove);
+            } else if (canTurnRight(lastMove)){
+                applyMove(currentDirection.turnRight(), lastMove);
             } else {
                 route = backTrack();
             }
         }
 
-        solvedMaze = new SolvedMaze(maze, route.map(Move::getPoint), visitedPoints);
+        solvedMaze = new SolvedMaze(maze, route.map(Move::getPoint).reverse(), visitedPoints);
         return solvedMaze;
     }
 
-    private Array<Move> backTrack(){
-        Array<Move> tempRoute = route.dropRight(1);
-        while(!canTurnLeft(tempRoute.last()) && !canTurnRight(tempRoute.last())){
-            tempRoute = tempRoute.dropRight(1);
-        }
+    private void applyMove(Direction currentDirection, Move last) {
+        Point point = currentDirection.move(last.getPoint());
+        route = route.prepend(new Move(currentDirection, point));
+        visitedPoints = visitedPoints.add(point);
+    }
 
-        return tempRoute;
+    private Array<Move> backTrack(){
+        return route.dropWhile(move -> !canTurnLeft(move) && !canTurnRight(move));
     }
 
     private boolean canMoveForward(Move lastMove){
@@ -91,7 +83,7 @@ public class Explorer {
     }
 
     private boolean hasFinished(){
-        return maze.getCell(route.last().getPoint()) == Cell.FINISH;
+        return maze.getCell(route.head().getPoint()) == Cell.FINISH;
     }
 
 }

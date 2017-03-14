@@ -168,12 +168,12 @@ public class TestMazeAppFunctional {
                 "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
                 "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
                 "X+XXXX++++++X X+++++++++++++++++++++++++++XXX\n" +
-                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX XXXX+XXXXXXXXX\n" +
-                "X+XXXX+XXXXXXXX+XXX XXXXXXXXXX XXXX+XXXXXXXXX\n" +
-                "X+X++++XXXXXX X+XXX XXX        XXXX++++XXXXXX\n" +
-                "X+X+XXXXXXXXX X+X   XXX XXXXXX XXXX+XX+XXXXXX\n" +
-                "X+X+XXXXXXXXX X+XXX     XXXXXX XXXX+XX+++XXXX\n" +
-                "X+X+++++++++X X+XXX XXX XXXXXX XXXXXXXXX+XXXX\n" +
+                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX+XXXX+XXXXXXXXX\n" +
+                "X+XXXX+XXXXXXXX+XXX+XXXXXXXXXX+XXXX+XXXXXXXXX\n" +
+                "X+X++++XXXXXX X+XXX+XXX++++++++XXXX++++XXXXXX\n" +
+                "X+X+XXXXXXXXX X+X+++XXX+XXXXXX+XXXX+XX+XXXXXX\n" +
+                "X+X+XXXXXXXXX X+XXX+++++XXXXXX+XXXX+XX+++XXXX\n" +
+                "X+X+++++++++X X+XXX+XXX+XXXXXX+XXXXXXXXX+XXXX\n" +
                 "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX+XXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
