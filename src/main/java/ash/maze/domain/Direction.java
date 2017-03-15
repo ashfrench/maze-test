@@ -1,6 +1,4 @@
-package ash.maze.explorer;
-
-import ash.maze.domain.Point;
+package ash.maze.domain;
 
 public enum Direction {
 

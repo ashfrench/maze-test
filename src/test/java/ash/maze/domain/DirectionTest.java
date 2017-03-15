@@ -1,9 +1,10 @@
-package ash.maze.explorer;
+package ash.maze.domain;
 
+import ash.maze.domain.Direction;
 import ash.maze.domain.Point;
 import org.junit.Test;
 
-import static ash.maze.explorer.Direction.*;
+import static ash.maze.domain.Direction.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 

@@ -27,24 +27,32 @@ public class ExplorerTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage(equalTo("Cannot supply a null maze"));
 
-        new Explorer(null);
+        new Explorer(null, new DepthFirstSolver());
+    }
+
+    @Test
+    public void testNullStrategy(){
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage(equalTo("Cannot supply a null strategy"));
+
+        new Explorer(maze, null);
     }
 
     @Test
     public void testCreation(){
-        assertThat(new Explorer(maze), notNullValue());
+        assertThat(new Explorer(maze, new DepthFirstSolver()), notNullValue());
     }
 
     @Test
     public void testSolveSimpleMaze(){
-        Explorer explorer = new Explorer(maze);
+        Explorer explorer = new Explorer(maze, new DepthFirstSolver());
         SolvedMaze solve = explorer.solve();
         assertThat(solve.getRoute(), equalTo(Array.of(new Point(1, 0), new Point(1, 1), new Point(1, 2), new Point(1, 3), new Point(1, 4))));
     }
 
     @Test
     public void testSolveSimpleMazeStringOutput(){
-        Explorer explorer = new Explorer(maze);
+        Explorer explorer = new Explorer(maze, new DepthFirstSolver());
         SolvedMaze solvedMaze = explorer.solve();
         String solvedRoute = solvedMaze.getSolvedRoute();
         String expected = "XXXXX\n" +
@@ -59,7 +67,7 @@ public class ExplorerTest {
                           {START, SPACE, SPACE, SPACE, WALL},
                           {WALL, WALL, SPACE, WALL, WALL},
                           {WALL, WALL, FINISH, WALL, WALL}};
-        Explorer explorer = new Explorer(new Maze(cells));
+        Explorer explorer = new Explorer(new Maze(cells), new DepthFirstSolver());
         SolvedMaze solvedMaze = explorer.solve();
 
         String expectedVisited =
@@ -86,7 +94,7 @@ public class ExplorerTest {
                 {START, SPACE, SPACE, SPACE, WALL},
                 {WALL, WALL, SPACE, WALL, WALL},
                 {WALL, WALL, FINISH, WALL, WALL}};
-        Explorer explorer = new Explorer(new Maze(cells));
+        Explorer explorer = new Explorer(new Maze(cells), new DepthFirstSolver());
 
         SolvedMaze solvedMaze = explorer.solve();
         String expectedVisited =
@@ -119,7 +127,7 @@ public class ExplorerTest {
 
         Cell[][] badMaze = {{WALL, WALL, WALL, WALL, WALL},{START, SPACE, WALL, SPACE, FINISH},{WALL, WALL, WALL, WALL, WALL}};
         Maze maze = new Maze(badMaze);
-        Explorer explorer = new Explorer(maze);
+        Explorer explorer = new Explorer(maze, new DepthFirstSolver());
         explorer.solve();
     }
 

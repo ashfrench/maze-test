@@ -2,6 +2,8 @@ package ash.maze;
 
 import ash.maze.domain.Maze;
 import ash.maze.domain.SolvedMaze;
+import ash.maze.explorer.BreadthFirstSolver;
+import ash.maze.explorer.DepthFirstSolver;
 import ash.maze.explorer.Explorer;
 import ash.maze.io.MazeFileReader;
 import org.junit.Test;
@@ -205,7 +207,8 @@ public class TestMazeAppFunctional {
 
         Maze maze = MazeFileReader.readFile(path);
 
-        return new Explorer(maze);
+        return new Explorer(maze, new DepthFirstSolver());
+//        return new Explorer(maze, new BreadthFirstSolver());
     }
 
     private URL getResource(String resource){
