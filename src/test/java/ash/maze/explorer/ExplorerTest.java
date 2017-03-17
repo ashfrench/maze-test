@@ -4,6 +4,7 @@ import ash.maze.domain.Cell;
 import ash.maze.domain.Maze;
 import ash.maze.domain.Point;
 import ash.maze.domain.SolvedMaze;
+import ash.maze.explorer.impl.DepthFirstSolver;
 import javaslang.collection.Array;
 import javaslang.collection.HashSet;
 import org.junit.Rule;

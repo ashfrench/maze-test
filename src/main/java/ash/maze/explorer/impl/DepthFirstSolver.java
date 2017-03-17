@@ -1,8 +1,9 @@
-package ash.maze.explorer;
+package ash.maze.explorer.impl;
 
 import ash.maze.domain.Move;
 import ash.maze.domain.Point;
 import ash.maze.domain.SolvedMaze;
+import ash.maze.explorer.AbstractSolver;
 import javaslang.Tuple;
 import javaslang.Tuple2;
 import javaslang.collection.Array;
