@@ -3,10 +3,11 @@ package ash.maze;
 import ash.maze.domain.Maze;
 import ash.maze.domain.SolvedMaze;
 import ash.maze.explorer.BreadthFirstSolver;
-import ash.maze.explorer.DepthFirstSolver;
 import ash.maze.explorer.Explorer;
 import ash.maze.io.MazeFileReader;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -15,7 +16,10 @@ import java.nio.file.Paths;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-public class TestMazeAppFunctional {
+public class TestMazeAppFunctionalBreadthFirst {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void testExampleMaze() throws Exception{
@@ -49,20 +53,20 @@ public class TestMazeAppFunctional {
 
         String expectedSolvedRoute =
                 "XXXXXXXXXXXXXXX\n" +
-                        "X+++++++++++++X\n" +
-                        "X+XXXXXXXXXXX+X\n" +
-                        "X+XS++++++++X+X\n" +
-                        "X+XXXXXXXXX+X+X\n" +
-                        "X+XXXXXXXXX+X+X\n" +
-                        "X+XXXX++++++X+X\n" +
-                        "X+XXXX+XXXXXX+X\n" +
-                        "X+XXXX+XXXXXX+X\n" +
-                        "X+X++++XXXXXX+X\n" +
-                        "X+X+XXXXXXXXX+X\n" +
-                        "X+X+XXXXXXXXX+X\n" +
-                        "X+X+++++++++X+X\n" +
-                        "X+XXXXXXXXX+++X\n" +
-                        "XFXXXXXXXXXXXXX\n";
+                "X+++++++++++++X\n" +
+                "X+XXXXXXXXXXX+X\n" +
+                "X+XS++++++++X+X\n" +
+                "X+XXXXXXXXX+X+X\n" +
+                "X+XXXXXXXXX+X+X\n" +
+                "X+XXXX++++++X+X\n" +
+                "X+XXXX+XXXXXX+X\n" +
+                "X+XXXX+XXXXXX+X\n" +
+                "X+X++++XXXXXX+X\n" +
+                "X+X+XXXXXXXXX+X\n" +
+                "X+X+XXXXXXXXX+X\n" +
+                "X+X+++++++++X+X\n" +
+                "X+XXXXXXXXX+++X\n" +
+                "XFXXXXXXXXXXXXX\n";
 
         assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedSolvedRoute));
     }
@@ -75,17 +79,17 @@ public class TestMazeAppFunctional {
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
                 "X+++++++++++++++++++++++++++++XXXXXX\n" +
-                "X+XXXXXXXXXXXXXXXXXXXXXXXXXXX+XX+XXX\n" +
-                "X+XS++++++++X XX      XXXXXXX+XX+XXX\n" +
-                "X+XXXXXXXXX+X XXXXXXX XXXX+++++++XXX\n" +
-                "X+XXXXXXXXX+X       X XXXXXXXXXX+XXX\n" +
-                "X+XXXX++++++X XX XXXX XX    +++++XXX\n" +
-                "X+XXXX+XXXX+X XX XXXX XXXX X+XXXXXXX\n" +
-                "X+XXXX+XXXX+X XX      XXXX X+XXXXXXX\n" +
-                "X+X++++XXXXXX XX XXXXXXXXX X+XXXXXXX\n" +
-                "X+X+XXXXXXXXX XXXXXXXXXXXX X+     XX\n" +
-                "X+X+XXXXXXXXX XXXX      XX X+XXXXXXX\n" +
-                "X+X+++++++++X XXXXXXXXX XXXX+XXXXXXX\n" +
+                "X+XXXXXXXXXXXXXXXXXXXXXXXXXXX+XX XXX\n" +
+                "X+XS++++++++X+XX++++++XXXXXXX+XX XXX\n" +
+                "X+XXXXXXXXX+X+XXXXXXX+XXXX   ++++XXX\n" +
+                "X+XXXXXXXXX+X+++++++X+XXXXXXXXXX+XXX\n" +
+                "X+XXXX++++++X+XX+XXXX+XX    +++++XXX\n" +
+                "X+XXXX+XXXX X+XX+XXXX+XXXX X+XXXXXXX\n" +
+                "X+XXXX+XXXX X+XX++++++XXXX X+XXXXXXX\n" +
+                "X+X++++XXXXXX+XX+XXXXXXXXX X+XXXXXXX\n" +
+                "X+X+XXXXXXXXX+XXXXXXXXXXXX X++++++XX\n" +
+                "X+X+XXXXXXXXX+XXXX++++++XX X+XXXXXXX\n" +
+                "X+X+++++++++X+XXXXXXXXX+XXXX+XXXXXXX\n" +
                 "X+XXXXXXXXX++++++++++++++++++XXXXXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
@@ -120,18 +124,18 @@ public class TestMazeAppFunctional {
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
                 "X+++++++++++++++++++++++++++++XXXXXX\n" +
-                "X+XXXXXXXXXXXXXXXXX+XXXXXXXXXXXX+XXX\n" +
-                "X+XS++++++++X+XX++++++XXXXXXX+XX+XXX\n" +
-                "X+XXXXXXXXX+X+XXXXXXX+XXXX+++++++XXX\n" +
-                "X+XXXXXXXXX+X+++++++X+XXXXXXXXXX+XXX\n" +
-                "X+XXXX++++++X+XX+XXXX+XX+++++++++XXX\n" +
-                "X+XXXX+XXXX+X+XX+XXXX+XXXX+X+XXXXXXX\n" +
-                "X+XXXX+XXXX+X+XX++++++XXXX+X+XXXXXXX\n" +
-                "X+X++++XXXXXX+XX+XXXXXXXXX+X+XXXXXXX\n" +
-                "X+X+XXXXXXXXX+XXXXXXXXXXXX+X++++++XX\n" +
-                "X+X+XXXXXXXXX+XXXX++++++XX+X+XXXXXXX\n" +
-                "X+X+++++++++X+XXXXXXXXX+XXXX+XXXXXXX\n" +
-                "X+XXXXXXXXX++++++++++++++++++XXXXXXX\n" +
+                "X+XXXXXXXXXXXXXXXXX+XXXXXXXXXXXX XXX\n" +
+                "X+XS++++++++X XX   +++XXXXXXX XX XXX\n" +
+                "X+XXXXXXXXX+X XXXXXXX+XXXX       XXX\n" +
+                "X+XXXXXXXXX+X++++   X+XXXXXXXXXX XXX\n" +
+                "X+XXXX++++++X+XX+XXXX+XX         XXX\n" +
+                "X+XXXX+XXXX X+XX+XXXX+XXXX X XXXXXXX\n" +
+                "X+XXXX+XXXX X+XX++++++XXXX X XXXXXXX\n" +
+                "X+X++++XXXXXX+XX XXXXXXXXX X XXXXXXX\n" +
+                "X+X+XXXXXXXXX+XXXXXXXXXXXX X      XX\n" +
+                "X+X+XXXXXXXXX+XXXX      XX X XXXXXXX\n" +
+                "X+X+++++++++X+XXXXXXXXX XXXX XXXXXXX\n" +
+                "X+XXXXXXXXX+++               XXXXXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
 
@@ -164,19 +168,19 @@ public class TestMazeAppFunctional {
 
         String expectedVisitedPoints =
                 "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-                "X+++++++++++++X++++XXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
-                "X+XXXXXXXXXXX+++XX+XXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+++++++++++++X++++XXXXXXXXXXX XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXXXX+++XX+XXXXXXXXXXX XXXXXXXXXXXXXX\n" +
                 "X+XS++++++++X XXXX+++++++++++++++XXXXXXXXXXXX\n" +
-                "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
-                "X+XXXXXXXXX+X X+XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
-                "X+XXXX++++++X X+++++++++++++++++++++++++++XXX\n" +
-                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX+XXXX+XXXXXXXXX\n" +
-                "X+XXXX+XXXXXXXX+XXX+XXXXXXXXXX+XXXX+XXXXXXXXX\n" +
-                "X+X++++XXXXXX X+XXX+XXX++++++++XXXX++++XXXXXX\n" +
-                "X+X+XXXXXXXXX X+X+++XXX+XXXXXX+XXXX+XX+XXXXXX\n" +
-                "X+X+XXXXXXXXX X+XXX+++++XXXXXX+XXXX+XX+++XXXX\n" +
-                "X+X+++++++++X X+XXX+XXX+XXXXXX+XXXXXXXXX+XXXX\n" +
-                "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX+XXXX\n" +
+                "X+XXXXXXXXX+X X XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXXXXXXX+X X XXXXXXXXXXXXXX+XXXXXXXXXXXXXX\n" +
+                "X+XXXX++++++X X++++++++++++++++           XXX\n" +
+                "X+XXXX+XXXXXX X+XXXXXXXXXXXXXX+XXXX XXXXXXXXX\n" +
+                "X+XXXX+XXXXXXXX+XXX+XXXXXXXXXX+XXXX XXXXXXXXX\n" +
+                "X+X++++XXXXXX+X+XXX+XXX++++++++XXXX    XXXXXX\n" +
+                "X+X+XXXXXXXXX+X+X+++XXX+XXXXXX+XXXX XX XXXXXX\n" +
+                "X+X+XXXXXXXXX+X+XXX+++++XXXXXX+XXXX XX   XXXX\n" +
+                "X+X+++++++++X+X+XXX+XXX+XXXXXX+XXXXXXXXX XXXX\n" +
+                "X+XXXXXXXXX+++++XXXXXXXXXXXXXXXXXXXXXXXX XXXX\n" +
                 "XFXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n";
 
         assertThat(solvedMaze.getVisitedPoints(), equalTo(expectedVisitedPoints));
@@ -201,14 +205,25 @@ public class TestMazeAppFunctional {
         assertThat(solvedMaze.getSolvedRoute(), equalTo(expectedRoute));
     }
 
+    @Test
+    public void Unsolveable() throws Exception {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage(equalTo("Unable to find a solution points visited so far\n" +
+                "XXXXXX\n" +
+                "XS+X F\n" +
+                "XXXXXX\n"));
+
+        Explorer explorer = getExplorer("Unsolvable.txt");
+        explorer.solve();
+    }
+
     private Explorer getExplorer(String file) throws Exception{
         URL resource = getResource(file);
         Path path = Paths.get(resource.toURI());
 
         Maze maze = MazeFileReader.readFile(path);
 
-        return new Explorer(maze, new DepthFirstSolver());
-//        return new Explorer(maze, new BreadthFirstSolver());
+        return new Explorer(maze, new BreadthFirstSolver());
     }
 
     private URL getResource(String resource){

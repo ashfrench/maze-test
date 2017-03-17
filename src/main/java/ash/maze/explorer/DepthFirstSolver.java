@@ -1,83 +1,45 @@
 package ash.maze.explorer;
 
-import ash.maze.domain.*;
+import ash.maze.domain.Move;
+import ash.maze.domain.Point;
+import ash.maze.domain.SolvedMaze;
+import javaslang.Tuple;
+import javaslang.Tuple2;
 import javaslang.collection.Array;
-import javaslang.collection.HashSet;
 import javaslang.collection.Set;
 import javaslang.control.Try;
 
-import java.util.Objects;
+import static javaslang.API.Case;
+import static javaslang.API.Match;
+import static javaslang.API.Match.Pattern0.any;
 
-public class DepthFirstSolver implements SolverStrategy {
+public class DepthFirstSolver extends AbstractSolver {
 
-    private Maze maze;
-    private Set<Point> visitedPoints;
-    private Array<Move> route;
-
-    @Override
-    public SolvedMaze solverMaze(Maze maze) {
-        Objects.requireNonNull(maze, "Maze cannot be null");
-        visitedPoints = HashSet.of(maze.getStart());
-        route = Array.of(new Move(Direction.NORTH, maze.getStart()));
-        this.maze = maze;
-        return solveMaze();
-    }
-
-    private SolvedMaze solveMaze(){
+    protected SolvedMaze solveMaze(){
 
         while(!hasFinished()) {
 
             Move lastMove = Try.of(() -> route.head())
                     .getOrElseThrow(() -> new RuntimeException("Unable to find a solution points visited so far\n"
                                                     + maze.printSolvedRoute(visitedPoints.toArray())));
-            Direction currentDirection = lastMove.getDirection();
 
-            if (canMoveForward(lastMove)) {
-                applyMove(currentDirection, lastMove);
-            } else if (canTurnLeft(lastMove)){
-                applyMove(currentDirection.turnLeft(), lastMove);
-            } else if (canTurnRight(lastMove)){
-                applyMove(currentDirection.turnRight(), lastMove);
-            } else {
-                route = backTrack();
-            }
+            Tuple2<Array<Move>, Set<Point>> tuple2 = Match(lastMove)
+                    .of(
+                            Case(this::canMoveForward, move -> applyMove(move.getDirection(), move)),
+                            Case(this::canTurnLeft, move -> applyMove(move.getDirection().turnLeft(), move)),
+                            Case(this::canTurnRight, move -> applyMove(move.getDirection().turnRight(), move)),
+                            Case(any(), Tuple.of(backTrack(route), visitedPoints))
+                    );
+
+            route = tuple2._1();
+            visitedPoints = tuple2._2();
         }
 
         return  new SolvedMaze(maze, route.map(Move::getPoint).reverse(), visitedPoints);
     }
 
-    private void applyMove(Direction currentDirection, Move last) {
-        Point point = currentDirection.move(last.getPoint());
-        route = route.prepend(new Move(currentDirection, point));
-        visitedPoints = visitedPoints.add(point);
-    }
-
-    private Array<Move> backTrack(){
+    protected Array<Move> backTrack(Array<Move> route){
         return route.dropWhile(move -> !canTurnLeft(move) && !canTurnRight(move));
     }
-
-    private boolean canMoveForward(Move lastMove){
-        return canMove(lastMove.getDirection(), lastMove.getPoint());
-    }
-
-    private boolean canTurnLeft(Move lastMove){
-        return canMove(lastMove.getDirection().turnLeft(), lastMove.getPoint());
-    }
-
-    private boolean canTurnRight(Move lastMove){
-        return canMove(lastMove.getDirection().turnRight(), lastMove.getPoint());
-    }
-
-    private boolean canMove(Direction direction, Point point){
-        Point move = direction.move(point);
-        return Try.of(() -> maze.getCell(move))
-                .map(cell -> (cell == Cell.FINISH || cell == Cell.SPACE) && !visitedPoints.contains(move))
-                .getOrElse(false);
-    }
-
-    private boolean hasFinished(){
-        return !route.isEmpty() && maze.getCell(route.head().getPoint()) == Cell.FINISH;
-    }
-
 
 }
