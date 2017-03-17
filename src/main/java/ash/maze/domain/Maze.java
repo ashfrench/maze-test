@@ -1,5 +1,6 @@
 package ash.maze.domain;
 
+
 import javaslang.collection.Array;
 import javaslang.collection.Map;
 import javaslang.control.Try;
@@ -7,6 +8,12 @@ import lombok.Getter;
 
 import java.util.Objects;
 import java.util.stream.Stream;
+
+import static ash.maze.domain.Cell.PATH;
+import static ash.maze.domain.Cell.SPACE;
+import static javaslang.API.Case;
+import static javaslang.API.Match;
+import static javaslang.API.Match.Pattern0.any;
 
 public class Maze {
 
@@ -95,15 +102,11 @@ public class Maze {
             for(int y = 0; y < maze[x].length; y ++){
                 Point point = new Point(x, y);
                 Cell cell = maze[x][y];
-                if(cell == Cell.SPACE){
-                    if(points.contains(point)){
-                        sb.append(Cell.PATH.toString());
-                    } else {
-                        sb.append(Cell.SPACE.toString());
-                    }
-                } else {
-                    sb.append(cell.toString());
-                }
+
+                String cellString = Match(cell)
+                        .of(Case(c -> c == SPACE, c -> points.contains(point) ? PATH.toString() : SPACE.toString()),
+                            Case(any(), cell::toString));
+                sb.append(cellString);
             }
             sb.append("\n");
         }
